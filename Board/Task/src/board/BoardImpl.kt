@@ -70,13 +70,13 @@ class SquareBoardImpl(override val width: Int) : SquareBoard {
 }
 
 class GameBoardImpl<T>(override val width: Int, private val board: SquareBoard) : SquareBoard by board, GameBoard<T> {
-    var map: MutableMap<Cell, T?> = board.getAllCells().associateWith { null }.toMutableMap()
+    private var map: MutableMap<Cell, T?> = board.getAllCells().associateWith { null }.toMutableMap()
     override fun set(cell: Cell, value: T?) {
         map[cell] = value
     }
 
     override fun filter(predicate: (T?) -> Boolean): Collection<Cell> =
-        map.filter { predicate(it.value) }.keys
+            map.filter { predicate(it.value) }.keys
 
 
     override fun find(predicate: (T?) -> Boolean): Cell? =
